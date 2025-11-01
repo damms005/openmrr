@@ -1,0 +1,1 @@
+- In Livewire class components, the render() method should be the last method defined in the class
