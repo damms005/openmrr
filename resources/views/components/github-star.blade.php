@@ -1,3 +1,5 @@
+@props(['owner', 'repo', 'starCount'])
+
 <a href="https://github.com/{{ $owner }}/{{ $repo }}" target="_blank"
   class="inline-flex items-center space-x-2 rounded-md px-3 py-1.5 text-sm font-medium text-gray-700 transition-colors dark:text-gray-300">
 

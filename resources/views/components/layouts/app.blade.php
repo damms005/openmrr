@@ -22,7 +22,7 @@
     <header class="border-b bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
       <div class="relative mx-auto max-w-7xl px-4 py-6 text-center">
         <div class="absolute right-0 top-6">
-          <x-github-star />
+          <x-github-star owner="damms005" repo="openmrr" :starCount="app(\App\Services\GitHubService::class)->getStarCount('damms005', 'openmrr')" />
         </div>
         <h1 class="text-4xl font-bold dark:text-white">
           <a href="{{ route('home') }}" class="inline-flex items-center gap-3">
