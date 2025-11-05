@@ -20,7 +20,7 @@ OpenMRR is a transparent, searchable database of verified startup revenue. It ag
 
 ## Tech Stack
 
-- **PHP**: v8.4+
+- **PHP**: v8.3+
 - **Laravel**: v12
 - **Livewire**: v3
 - **Filament**: v4
