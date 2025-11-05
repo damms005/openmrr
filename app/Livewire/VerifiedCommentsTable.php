@@ -115,7 +115,7 @@ final class VerifiedCommentsTable extends Component implements HasActions, HasSc
         return view('livewire.verified-comments-table');
     }
 
-    protected function getActions(): array
+    private function getActions(): array
     {
         return [
             $this->viewCommentsAction(),

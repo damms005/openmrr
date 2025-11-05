@@ -77,7 +77,7 @@ it('loads startup detail with verified comments table', function (): void {
     $startup = Startup::factory()->create(['founder_id' => $founder->id]);
     Rfc::factory(3)->for($startup)->create(['response' => 'Great product!']);
 
-    $response = $this->get('/startup/'.$startup->slug);
+    $response = $this->get('/startup/' . $startup->slug);
 
     $response->assertOk();
     $response->assertSeeLivewire(VerifiedCommentsTable::class);
@@ -123,7 +123,7 @@ it('requires api key to view comments', function (): void {
 
     Livewire::test(VerifiedCommentsTable::class, ['startup' => $startup])
         ->assertSet('showComments', false)
-        ->assertSeeText('View All Comments');
+        ->assertSeeText('Unlock Comments');
 });
 
 it('verifies api key and shows comments', function (): void {
@@ -131,7 +131,7 @@ it('verifies api key and shows comments', function (): void {
     $apiKey = 'test-api-key-123';
     $startup = Startup::factory()->create([
         'founder_id' => $founder->id,
-        'encrypted_api_key' => bcrypt($apiKey),
+        'encrypted_api_key' => encrypt($apiKey),
     ]);
     Rfc::factory(3)->for($startup)->create(['response' => 'Excellent!']);
 
@@ -144,7 +144,7 @@ it('rejects invalid api key', function (): void {
     $founder = Founder::factory()->create();
     $startup = Startup::factory()->create([
         'founder_id' => $founder->id,
-        'encrypted_api_key' => bcrypt('correct-key'),
+        'encrypted_api_key' => encrypt('correct-key'),
     ]);
 
     Livewire::test(VerifiedCommentsTable::class, ['startup' => $startup])
