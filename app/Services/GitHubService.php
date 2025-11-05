@@ -23,7 +23,7 @@ final readonly class GitHubService
 
         $cacheKey = "github_repo_{$owner}_{$repo}";
 
-        return Cache::remember($cacheKey, now()->addMinutes(5), function () use ($owner, $repo) {
+        return Cache::remember($cacheKey, now()->addMinutes(10), function () use ($owner, $repo) {
             $response = Http::withHeaders([
                 'Accept' => 'application/vnd.github.v3+json',
                 'User-Agent' => 'OpenMRR-App',

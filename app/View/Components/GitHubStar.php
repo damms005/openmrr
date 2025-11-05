@@ -22,6 +22,10 @@ final class GitHubStar extends Component
 
     public function render(): View
     {
-        return view('components.github-star');
+        return view('components.github-star', [
+            'owner' => $this->owner,
+            'repo' => $this->repo,
+            'starCount' => $this->starCount,
+        ]);
     }
 }
