@@ -26,7 +26,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: "22"
 
       - name: Install Dependencies
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
@@ -78,8 +78,8 @@ jobs:
           restore-keys: ${{ runner.os }}-phpstan-
       - run: mkdir -p /tmp/phpstan
 
-      - name: Tests
-        run: composer test
+      - name: Pest Tests
+        run: ./vendor/bin/pest -v
 
       - name: Store Artifacts
         uses: actions/upload-artifact@v4
