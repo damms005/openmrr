@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use NunoMaduro\Essentials\Configurables\Unguard;
-
 return [
-    Unguard::class => true,
+    \NunoMaduro\Essentials\Configurables\ProhibitDestructiveCommands::class => false,
 ];
