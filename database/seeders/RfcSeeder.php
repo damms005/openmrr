@@ -24,7 +24,7 @@ final class RfcSeeder extends Seeder
                 ]);
         }
 
-        $topStartups = Startup::orderBy('rfc_count', 'desc')->take(3)->get();
+        $topStartups = Startup::orderBy('total_revenue', 'desc')->take(3)->get();
 
         foreach ($topStartups as $startup) {
             Rfc::factory(random_int(1111, 2111))
