@@ -27,7 +27,7 @@ return new class extends Migration
             $table->integer('rank');
             $table->decimal('monthly_recurring_revenue', 15, 2)->default(0);
             $table->integer('subscriber_count')->default(0);
-            $table->string('encrypted_api_key')->nullable();
+            $table->text('encrypted_api_key')->nullable();
             $table->string('account_type');
             $table->timestamp('last_synced_at')->nullable();
             $table->string('last_processed_subscription_id')->nullable();
