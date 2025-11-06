@@ -13,14 +13,12 @@ use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
-use Filament\Support\Enums\Size;
 use Filament\Support\Enums\Width;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\Layout\View;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View as IlluminateView;
 use Livewire\Component;
 
@@ -112,7 +110,9 @@ final class VerifiedCommentsTable extends Component implements HasActions, HasSc
 
     public function render(): IlluminateView
     {
-        return view('livewire.verified-comments-table');
+        return view('livewire.verified-comments-table', [
+            'commentCount' => $this->startup->rfcs()->whereNotNull('response')->count()
+        ]);
     }
 
     private function getActions(): array
