@@ -19,9 +19,7 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->string('slug')->unique();
             $table->text('description')->nullable();
-            $table->foreignId('business_category_id')
-                ->nullable()
-                ->constrained('business_categories');
+            $table->foreignId('business_category_id')->nullable();
             $table->string('website_url')->nullable();
             $table->string('avatar_url')->nullable();
             $table->date('business_created_at')->nullable();
