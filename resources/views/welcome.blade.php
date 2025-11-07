@@ -32,18 +32,6 @@
               <div class="mr-2 h-1.5 w-1.5 rounded-full bg-neutral-400"></div>
               Coming Soon
             </div>
-
-            <div class="inline-flex items-center overflow-hidden rounded text-xs font-medium">
-              <div class="flex items-center bg-neutral-600 px-2.5 py-1 text-white">
-                <svg class="mr-1.5 h-3 w-3" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-                </svg>
-                Laravel Cloud
-              </div>
-              <div class="bg-green-600 px-2.5 py-1 text-white">
-                Verified
-              </div>
-            </div>
           </div>
 
           <h1 class="mb-6 text-4xl font-light tracking-tight text-neutral-900 lg:text-6xl xl:text-7xl">
