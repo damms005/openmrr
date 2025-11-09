@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\ProofOfCodeController;
 use App\Livewire\AdvertiserCheckoutSuccess;
 use App\Livewire\CategoryListing;
 use App\Livewire\FounderProfile;
@@ -22,3 +23,5 @@ Route::get('/advertiser/checkout/success', AdvertiserCheckoutSuccess::class)->na
 Route::get('/startup/{startup:slug}/rfc', RfcInitiation::class)->name('rfc.initiation');
 Route::get('/rfc/{rfc:uuid}', RfcCommentView::class)->name('rfc.comment.view');
 Route::get('/rfc/{rfc:uuid}/respond', RfcResponseForm::class)->middleware('signed:rfc.respond')->name('rfc.respond');
+
+Route::get('/poco', ProofOfCodeController::class);

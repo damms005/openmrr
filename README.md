@@ -110,6 +110,49 @@ php artisan test
 - API keys are encrypted at rest using [Laravel's encryption](https://laravel.com/docs/master/encryption) (OpenSSL AES-256 and AES-128 encryption)
 - All payment API communications are read-only (no modifications via API)
 
+### Proof of Code (POCO)
+
+OpenMRR implements Proof of Code verification to cryptographically prove that the running server code matches the open-source code on GitHub.
+
+#### How It Works
+
+1. The server exposes a `/poco` endpoint that uses the latest git commit hash as the encryption key
+2. Copy the latest commit hash from the GitHub repository UI
+3. Encrypt any value (e.g., "verify") using the commit hash as the encryption secret
+4. Send the encrypted token: `GET /poco?token=<encrypted_value>`
+5. The server attempts to decrypt the token using its current commit hash
+
+#### Verification Process
+
+**Step 1: Get Latest Commit Hash from GitHub**
+
+Visit [https://github.com/damms005/openmrr](https://github.com/damms005/openmrr) and copy the full commit hash of the latest commit.
+
+**Step 2: Encrypt Your Value**
+
+Run this command, replacing `latest_commit_hash_here` with the full hash from GitHub and `verify` with your value:
+
+```bash
+COMMIT_HASH="latest_commit_hash_here" VALUE="verify" KEY=$(echo -n "$COMMIT_HASH" | sha256sum | awk '{print $1}') IV=$(openssl rand -hex 16) ENCRYPTED=$(echo -n "$VALUE" | openssl enc -aes-256-cbc -K "$KEY" -iv "$IV" -a -nosalt) PAYLOAD=$(echo -n "$(echo "$IV" | xxd -r -p)$(echo "$ENCRYPTED" | base64 -d)" | base64) && echo "$PAYLOAD"
+```
+
+The output is your encrypted token. Use this token in the next step below:
+
+**Step 3: Verify on Server**
+
+```bash
+curl "https://openmrr.com/poco?token=<your-encrypted-token>"
+
+# Success Response:
+{
+  "verified": true,
+  "message": "Code verified successfully",
+  "decrypted_value": "verify",
+  "commit_hash": "be2682cbbbbe9d4471066a4bf32cc0daa18c4b60"
+}
+
+```
+
 ## Contributing
 
 Contributions welcome. Follow these steps:
