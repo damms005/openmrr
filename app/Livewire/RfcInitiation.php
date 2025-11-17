@@ -8,6 +8,7 @@ use App\Actions\SendRfcNotification;
 use App\Data\CustomerData;
 use App\Models\Startup;
 use Exception;
+use Filament\Forms\Components\TextInput;
 use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
@@ -41,6 +42,10 @@ final class RfcInitiation extends Component implements HasActions, HasForms, Has
 
     public ?string $errorMessage = null;
 
+    public ?string $providedApiKey = null;
+
+    public bool $isBusinessOwnerVerified = false;
+
     public function mount(Startup $startup): void
     {
         $this->startup = $startup;
@@ -57,10 +62,19 @@ final class RfcInitiation extends Component implements HasActions, HasForms, Has
                     ->label('Email'),
             ])
             ->headerActions([
+                Action::make('verifyBusinessOwner')
+                    ->label('Verify Business Owner')
+                    ->form([
+                        TextInput::make('api_key')
+                            ->label('API Key')
+                            ->password()
+                            ->required(),
+                    ])
+                    ->visible(fn() => ! $this->isBusinessOwnerVerified)
+                    ->action(fn(array $data) => $this->verifyBusinessOwner($data)),
                 Action::make('loadCustomers')
                     ->label('Load Customers')
-                    ->visible(false)
-                    // ->visible(fn() => empty($this->customers) && ! $this->loadingCustomers)
+                    ->visible(fn() => $this->isBusinessOwnerVerified && empty($this->customers) && ! $this->loadingCustomers)
                     ->action(fn() => $this->loadCustomers()),
                 Action::make('previousPage')
                     ->label('Previous Page')
@@ -135,6 +149,26 @@ final class RfcInitiation extends Component implements HasActions, HasForms, Has
                 ->body('Failed to send RFC email: ' . $e->getMessage())
                 ->send();
         }
+    }
+
+    public function verifyBusinessOwner(array $data): void
+    {
+        if ($data['api_key'] === $this->startup->decrypted_api_key) {
+            $this->isBusinessOwnerVerified = true;
+            $this->providedApiKey = null;
+
+            Notification::make()
+                ->success()
+                ->body('Business owner verified')
+                ->send();
+
+            return;
+        }
+
+        Notification::make()
+            ->body('The provided API key does not match this startup')
+            ->danger()
+            ->send();
     }
 
     public function render()
