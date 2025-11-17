@@ -59,7 +59,8 @@ final class RfcInitiation extends Component implements HasActions, HasForms, Has
             ->headerActions([
                 Action::make('loadCustomers')
                     ->label('Load Customers')
-                    ->visible(fn() => empty($this->customers) && ! $this->loadingCustomers)
+                    ->visible(false)
+                    // ->visible(fn() => empty($this->customers) && ! $this->loadingCustomers)
                     ->action(fn() => $this->loadCustomers()),
                 Action::make('previousPage')
                     ->label('Previous Page')
