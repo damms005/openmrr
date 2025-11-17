@@ -63,8 +63,8 @@ final class RfcInitiation extends Component implements HasActions, HasForms, Has
             ])
             ->headerActions([
                 Action::make('verifyBusinessOwner')
-                    ->label('Verify Business Owner')
-                    ->form([
+                    ->label('Verify Ownership')
+                    ->schema([
                         TextInput::make('api_key')
                             ->label('API Key')
                             ->password()
